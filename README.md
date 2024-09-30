@@ -62,7 +62,7 @@ client-server-prime-factorization/
 ### 1. **Clone the repository:**
 
 ```bash
-git clone https://github.com/yourusername/client-server-prime-factorization.git
+git clone https://github.com/aragakerubo/client-server-prime-factorization.git
 cd client-server-prime-factorization
 ```
 
