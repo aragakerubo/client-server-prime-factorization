@@ -1,42 +1,39 @@
 #include "server_client_utils.h"
 
-void load_primes_from_file(int *primes, int *num_primes, char *filename)
+// Function to read the first 1000 primes from a file and store them in an array
+void read_primes_from_file(const char *filename, int *primes, int *num_primes)
 {
-	FILE *file = fopen(filename, "r");
-	int i = 0;
+	int prime;
+	int i;
 
+	FILE *file = fopen(filename, "r"); // Open file for reading
 	if (file == NULL)
 	{
 		perror("Error opening file");
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 
-	while (fscanf(file, "%d", &primes[i]) != EOF)
+	*num_primes = 0;
+
+	// Read primes from file into the array
+	while (fscanf(file, "%d", &prime) != EOF && *num_primes < 1000)
 	{
-		i++;
+		primes[(*num_primes)++] = prime;
 	}
 
-	*num_primes = i;
-	fclose(file);
+	fclose(file); // Close the file after reading
 }
 
-int find_prime_factors(int *primes, int num_primes, int n, int *factors)
+// Function to return one prime factor of a given number
+int get_prime_factor(int number, int *primes, int num_primes)
 {
-	int i = 0;
-	int j = 0;
-	while (n > 1)
+	// Try dividing the number by each prime from the array
+	for (i = 0; i < num_primes; i++)
 	{
-		if (n % primes[i] == 0)
+		if (number % primes[i] == 0)
 		{
-			factors[j] = primes[i];
-			j++;
-			n /= primes[i];
-		}
-		else
-		{
-			i++;
+			return (primes[i]); // Return the first prime factor found
 		}
 	}
-
-	return j;
+	return (-1); // If no prime factor is found, return -1
 }

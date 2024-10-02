@@ -9,8 +9,9 @@
 
 #define PORT 8080
 #define MAX 1000
+#define BUFFER_SIZE 1024
 
-void load_primes_from_file(int *primes, int *num_primes, char *filename);
-int find_prime_factors(int *primes, int num_primes, int n, int *factors);
+void read_primes_from_file(const char *filename, int *primes, int *num_primes);
+int get_prime_factor(int number, int *primes, int num_primes)
 
 #endif /* SERVER_CLIENT_UTILS_H */

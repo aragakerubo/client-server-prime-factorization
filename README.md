@@ -1,6 +1,6 @@
 # **Client-Server Prime Factorization**
 
-This project implements a client-server application that checks if a given integer is the product of two prime numbers. The application uses socket programming to allow communication between the client and server.
+This project implements a client-server application in a Unix-based system that checks if a given integer is the product of two prime numbers. The application uses socket programming to allow communication between the client and server.
 
 ## **Table of Contents**
 
