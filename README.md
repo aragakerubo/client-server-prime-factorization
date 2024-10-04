@@ -1,6 +1,6 @@
 # **Client-Server Prime Factorization**
 
-This project implements a client-server application in a Unix-based system that checks if a given integer is the product of two prime numbers. The application uses socket programming to allow communication between the client and server.
+This project implements a client-server application that checks if a given integer has a prime factor from a predefined list of the first 1,000 prime numbers. The application uses socket programming to allow communication between the client and server.
 
 ## **Table of Contents**
 
@@ -9,55 +9,53 @@ This project implements a client-server application in a Unix-based system that 
 -   [Project Structure](#project-structure)
 -   [Requirements](#requirements)
 -   [Usage](#usage)
--   [Compilation and Execution](#compilation-and-execution)
+-   [Execution](#execution)
 -   [License](#license)
 
 ## **Overview**
 
-This client-server application, written in C, demonstrates socket programming. The client sends an integer to the server, and the server checks if the integer can be expressed as the product of two primes from a list of the first 1,000 prime numbers (up to 7919). If the product of two primes is found, the server responds with one of the prime factors.
+This client-server application, written in Python, demonstrates socket programming. The client sends an integer to the server, and the server checks if the integer has a prime factor from a list of the first 1,000 prime numbers (up to 7919). If a prime factor is found, the server responds with that factor; otherwise, it returns an error message.
 
 ## **Features**
 
 -   **Server**:
     -   Receives an integer from the client.
-    -   Checks if the integer is a product of two primes from a predefined list.
-    -   Sends one of the prime factors back to the client.
+    -   Checks if the integer has a prime factor from a predefined list (`1000.txt`).
+    -   Sends the prime factor back to the client or an error message if no factors are found.
 -   **Client**:
     -   Captures an integer from the user.
     -   Sends the integer to the server.
     -   Receives a prime factor or an error message from the server.
 -   **Modularized**:
-    -   Common functions (prime number loading, factorization check) are stored in separate utility files.
+    -   Utilizes a file (`1000.txt`) containing the first 1,000 prime numbers for prime factorization.
 
 ## **Project Structure**
 
 ```
 client-server-prime-factorization/
 │
-├── server_client_utils.h       # Header file containing shared function declarations
-├── server_client_utils.c       # Source file containing the implementation of shared functions
-├── server.c                    # Server-side code to handle prime factorization logic
-├── client.c                    # Client-side code for interacting with the server
+├── client.py                   # Client-side code for interacting with the server
+├── server.py                   # Server-side code to handle prime factorization logic
 ├── 1000.txt                    # List of the first 1,000 prime numbers
+├── .gitignore                  # Git ignore file to exclude unnecessary files
 └── README.md                   # This README file
 ```
 
 ## **Requirements**
 
--   A C compiler (e.g., `gcc`)
--   A terminal or command prompt
--   Prime numbers file: Download the file of the first 1,000 prime numbers from [here](https://t5k.org/lists/small/1000.txt) and save it as `1000.txt` in the project directory.
+-   Python 3.x installed on your system.
+-   `1000.txt` file with the first 1,000 prime numbers. You can download this from [here](https://t5k.org/lists/small/1000.txt).
 
 ## **Usage**
 
 ### **Client-Server Communication:**
 
 1. The client accepts an integer input from the user.
-2. The server checks if the number is a product of two prime numbers.
-3. If it is, the server returns one of the prime factors to the client.
-4. If not, the server sends an error message indicating no prime factors were found.
+2. The client sends this number to the server.
+3. The server checks if the number has a prime factor from the list of prime numbers.
+4. The server responds with a prime factor or an error message if no factors are found.
 
-## **Compilation and Execution**
+## **Execution**
 
 ### 1. **Clone the repository:**
 
@@ -66,43 +64,59 @@ git clone https://github.com/aragakerubo/client-server-prime-factorization.git
 cd client-server-prime-factorization
 ```
 
-### 2. **Compile the code:**
+### 2. **Prepare the prime numbers file (`1000.txt`):**
 
-#### Compile both server and client along with the utility functions:
-
-```bash
-gcc server.c server_client_utils.c -o server
-gcc client.c -o client
-```
+Ensure that you have a file named `1000.txt` in the same directory. This file should contain the first 1,000 prime numbers, one number per line.
 
 ### 3. **Run the server:**
 
-Run this in a separate terminal:
+Open a terminal and start the server by running:
 
 ```bash
-./server
+python3 server.py
 ```
 
-The server will start and listen for incoming connections.
+The server will start and listen for incoming client connections on `0.0.0.0:8080`.
+
+```bash
+Server listening on port 8080
+```
 
 ### 4. **Run the client:**
 
-Run the client in another terminal:
+In another terminal, run the client:
 
 ```bash
-./client
+python3 client.py
 ```
 
-The client will prompt you to input an integer and display the response from the server.
+The client will prompt you to input an integer. After sending the number to the server, the client will display the server's response.
 
 ### **Example:**
 
 ```
-Enter an integer: 77
-Server response: 7
+Enter a number: 77
+Number sent to server: 77
+Message from server: One prime factor of 77 is: 7
 ```
 
-In this example, 77 is the product of two primes (7 and 11), so the server returns one of the factors.
+In this example, 77 is divisible by the prime number 7, so the server returns one of the prime factors.
+
+From the terminal running the server we see:
+
+```bash
+Server listening on port 8080
+Connection from ('127.0.0.1', 54441)
+Received number from client: 77
+Sent response to client: One prime factor of 77 is: 7
+```
+
+### **Common Errors:**
+
+-   **Invalid Input (Client)**: If the user enters a non-numeric value, the client will keep asking until a valid number is provided.
+-   **File Errors (Server)**: If the server cannot find `1000.txt`, it will display an error message and stop.
+
+---
 
 ## **License**
 
